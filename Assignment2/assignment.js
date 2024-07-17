@@ -38,10 +38,32 @@ data_1.Fields.Dimensions.map(function (x) {
     x.Parent == 'Order Date' ? dataIndex.push(count) : 0;
     count++;
 });
-// let dataIndex = new Array();
-// Fields.Dimensions.forEach((x,y)=>{
-//     if(x.Parent == 'Order Data'){
-//         dataIndex.push(y);
-//     }
+// Q8
+var dimensionArray = new Array();
+for (var i = 0; i < data_1.Fields.Dimensions.length; i++) {
+    dimensionArray[i] = i;
+}
+for (var i = 0; i < data_1.Fields.Dimensions.length; i++) {
+    var temp = dimensionArray[i];
+    for (var j = 0; j < dataIndex.length; j++) {
+        if (temp == dataIndex[j]) {
+            // console.log(Fields.Dimensions[temp])
+        }
+    }
+}
+// Q9
+data_1.Fields.Measures.forEach(function (obj) {
+    console.log(obj);
+});
+// Fields.Dimensions.map(function(obj){
+//     obj.datasetKey = obj.datasetId;
+//     delete obj.datasetId;
 // })
-console.log(dataIndex);
+// Q10
+fieldList.filter(function (val) {
+    if (val.variableType === 'geographical') {
+        return val.mappingDetails.unMappedLocationCount = 5;
+    }
+});
+// console.log(fieldList)
+// Q11

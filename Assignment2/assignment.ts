@@ -48,18 +48,47 @@ Fields.Dimensions.map((x) => {
     count++;
 })
 
+// Q8
+let dimensionArray = new Array();
+for(let i = 0; i < Fields.Dimensions.length; i++){
+    dimensionArray[i] = i;
+}
 
-// let dataIndex = new Array();
-// Fields.Dimensions.forEach((x,y)=>{
-//     if(x.Parent == 'Order Data'){
-//         dataIndex.push(y);
-//     }
+for(let i = 0; i < Fields.Dimensions.length; i++){
+    let temp = dimensionArray[i];
+    for(let j = 0; j < dataIndex.length; j++){
+        if(temp == dataIndex[j]){
+            // console.log(Fields.Dimensions[temp])
+        }
+    }
+}
+
+// Q9
+
+// Fields.Measures.forEach((obj)=>{
+//     let key :string = "datasetKey";
+//     let value = obj.datasetId;
+//     obj[key] = value;
 // })
 
-// console.log(dataIndex)
+// Fields.Dimensions.map(function(obj){
+//     obj.datasetKey = obj.datasetId;
+//     delete obj.datasetId;
+// })
 
 
+// Q10
 
+fieldList.filter(val => {
+    if(val.variableType === 'geographical'){
+       return val.mappingDetails.unMappedLocationCount = 5
+    }
+});
+
+// console.log(fieldList)
+
+
+// Q11
 
 
 
