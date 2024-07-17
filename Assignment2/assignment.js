@@ -9,34 +9,45 @@ Array.prototype.push.apply(fieldList, data_1.Fields.Hierarchies);
 Array.prototype.push.apply(fieldList, data_1.Fields.Measures);
 // Q3
 var calculatedfields = fieldList.filter(function (value) {
-    if (value.calculatedFieldKey) {
+    if (value.calculatedFieldKey != undefined) {
         return value.calculatedFieldKey;
     }
 });
 // console.log(calculatedfields)
 // Q4
-var pos = fieldList.map(function (e) { return e.entityName; }).indexOf('Discount');
-// console.log(pos)
-fieldList = fieldList.filter(function (obj) {
-    return obj.entityName !== 'Discount';
+var pos = fieldList.findIndex(function (x) {
+    return x.entityName === 'Discount';
 });
-// console.log(fieldList);
+// console.log(pos)
+// fieldList = fieldList.filter(function(obj) {
+//     return obj.entityName !== 'Discount';
+// });
+fieldList.splice(pos, 1);
 // Q5
-fieldList = fieldList.filter(function (obj) {
+fieldList.forEach(function (obj) {
     if (obj.entityName == 'City') {
         obj.isNumericDataType = true;
         obj.dataType = 'numerical';
     }
-    return obj;
 });
-// console.log(fieldList)
 // Q6
+var allArray = new Array();
+for (var i = 0; i < calculatedfields.length; i++) {
+    allArray.push.apply(allArray, calculatedfields[i].variables);
+}
+var filterdArray = new Array();
+allArray.map(function (x) {
+    if (x.variableType == 'numerical') {
+        filterdArray.push(x);
+    }
+});
+// console.log(filterdArray)
 // Q7
-var count = 0;
 var dataIndex = new Array();
-data_1.Fields.Dimensions.map(function (x) {
-    x.Parent == 'Order Date' ? dataIndex.push(count) : 0;
-    count++;
+data_1.Fields.Dimensions.forEach(function (ob, i) {
+    if (ob.Parent == 'Order Date') {
+        dataIndex.push(i);
+    }
 });
 // Q8
 var dimensionArray = new Array();
@@ -47,23 +58,38 @@ for (var i = 0; i < data_1.Fields.Dimensions.length; i++) {
     var temp = dimensionArray[i];
     for (var j = 0; j < dataIndex.length; j++) {
         if (temp == dataIndex[j]) {
-            // console.log(Fields.Dimensions[temp])
+            console.log(data_1.Fields.Dimensions[temp]);
         }
     }
 }
 // Q9
 data_1.Fields.Measures.forEach(function (obj) {
-    console.log(obj);
+    var key = "datasetKey";
+    var value = obj.datasetId;
+    obj[key] = value;
 });
+console.log(data_1.Fields.Measures);
 // Fields.Dimensions.map(function(obj){
 //     obj.datasetKey = obj.datasetId;
 //     delete obj.datasetId;
 // })
+// let c : string= "datasetKey"
+// for(let i=0;i<Fields.Measures.length;i++){
+//     delete Fields.Measures[i].datasetId;
+// }
 // Q10
-fieldList.filter(function (val) {
-    if (val.variableType === 'geographical') {
-        return val.mappingDetails.unMappedLocationCount = 5;
+fieldList.forEach(function (x) {
+    if (x.variableType == 'geographical') {
+        x.mappingDetails.unMappedLocationCount = 5;
     }
 });
-// console.log(fieldList)
 // Q11
+var numericalItems = new Array();
+fieldList.forEach(function (x) {
+    if (x.isNumericDataType == true && x.dataType == 'float') {
+        var val = x.subDatasetId;
+        x.subDatasetId = x.datasetId;
+        numericalItems.push(val);
+    }
+});
+// console.log(numericalItems)
